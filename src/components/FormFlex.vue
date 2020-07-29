@@ -472,7 +472,14 @@
           </template>
           </q-input>
         </template>
-        
+         <template v-else-if="item.type == 'img'">
+         <div class="col-4" align="center">
+        <q-img
+          :src="model[item.key]"
+          :ratio="9/9"
+        />
+      </div>
+        </template>
         <template v-else-if="item.type == 'textoNormal'">
           <q-input
             dense
@@ -524,9 +531,6 @@
             @change="onValidation"
             v-bind="item.props"
           >
-          <template v-slot:prepend>
-            <q-icon name="person" />
-          </template>
           </q-input>
         </template>
       </div>

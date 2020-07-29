@@ -24,7 +24,8 @@
         </div>
         <div class="row fit">
           <div class="col-12">
-            <q-input dense v-model="filter" :placeholder="$t('tables.find')">
+            <br>
+            <q-input rounded outlined v-model="filter" :placeholder="$t('tables.find')">
               <template v-slot:append>
                 <q-icon name="search" />
               </template>
@@ -35,7 +36,7 @@
       <template v-slot:no-data="{ icon, message, filter }">
         <div class="full-width row flex-center text-primary q-gutter-sm">
           <q-icon size="2em" name="sentiment_dissatisfied" />
-          <span>{{$t('tables.bad')}} {{ $t(message) }}</span>
+          <span> {{ $t(message) }}</span>
           <q-icon size="2em" :name="filter ? 'filter_b_and_w' : icon" />
         </div>
       </template>

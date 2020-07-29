@@ -2,7 +2,8 @@ import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import Store from '../index';
 import Vue from 'vue';
 import { IUser } from '../../models/user';
-import { oflineItems } from '../../helpers/helpers';
+import { oflineItems, generateFormDataAny } from '../../helpers/helpers';
+import { NotifyPersonal } from 'src/helpers/messages';
 
 @Module({
 	name: 'UserStoreModule',
@@ -87,7 +88,7 @@ export class UserStoreModule extends VuexModule {
 			if (navigator.onLine) {
 				const res = await Vue.prototype.$axios.put(
 					`users/${item.id}`,
-					item
+					generateFormDataAny(item)
 				);
 				this.context.commit('UPDATE', res);
 			} else {

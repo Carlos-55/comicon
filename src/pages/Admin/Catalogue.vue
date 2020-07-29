@@ -72,15 +72,7 @@ export default class Users extends Vue {
       align: 'center',
       field: 'active'
     },
-    {
-      name: 'rol',
-      label: 'headers.users.rol',
-      sortable: true,
-      required: true,
-      align: 'center',
-      field: 'rol'
-    },
-    {
+     {
       name: 'options',
       label: 'headers.users.options',
       sortable: false,

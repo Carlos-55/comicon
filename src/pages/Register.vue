@@ -112,7 +112,7 @@ export default class FormUsers extends Vue {
       return;
     }
     console.log(this.user);
-      const res = await this.usersState.create({ ...this.user, rol: 2 });
+      const res = await this.usersState.create({ ...this.user});
       this.$router.push('/');
   }
   fields = [
@@ -158,18 +158,7 @@ export default class FormUsers extends Vue {
   ];
 
   fieldsTwo = [
-        {
-            type: 'textoNormal',
-            label: 'Nombre de usuario',
-            key: 'user',
-            field: {
-                class: 'col-12 q-px-sm q-py-sm'
-            },
-            rules: [...ValidationsForm.req],
-            props: {
-            }
-        },
-        {
+       {
         type: 'textoNormalNu',
         label: 'Numero de telefono',
         key: 'cellphone',

@@ -27,12 +27,14 @@ export default {
 	forms: {
 		users: {
 			name: 'Name',
-			last_name: 'Surnames',
+			last_name: 'Surname',
+			second_lastname:'Second surname',
 			photo: 'Photo',
 			address: 'Address',
 			cp: 'Postal code',
 			street: 'street',
-			email: 'Email'
+			email: 'Email',
+			birtDate: 'Date of birth'
 		}
 	},
 	headers: {

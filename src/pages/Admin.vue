@@ -24,15 +24,15 @@ export default class Index extends Vue {
 			url: '/admin',
 		},
 		{
-			title: 'Usuarios',
-			description: 'Muestra los usuarios',
+			title: 'Categorias',
+			description: 'Comics por categoria',
 			url: '/admin/usuarios',
 		},
-		{
-			title: 'Roles',
-			description: 'Muestra los usuarios',
-			url: '/admin/roles',
-		},
+		// {
+		// 	title: 'Roles',
+		// 	description: 'Muestra los usuarios',
+		// 	url: '/admin/roles',
+		// },
 		{
 			title: 'Configuracion',
 			description: 'Configuracion de datos',

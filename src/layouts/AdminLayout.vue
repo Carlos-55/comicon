@@ -2,13 +2,7 @@
   <q-layout view="hHr lpR lFr">
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="left = !left" />
-        <q-toolbar-title>
-          <!-- <q-avatar>
-            <img :src="icon" />
-          </q-avatar> -->
-          <!-- {{ app }} -->
-        </q-toolbar-title>
+        <q-btn  flat round icon="menu" @click="left = !left" />
         <!-- <q-btn-dropdown v-model="menu" class="glossy q-ml-lg" color="red" label="Idiomas">
           <q-list>
             <q-item
@@ -27,8 +21,17 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="left" side="left" elevated>
+    <q-drawer flat show-if-above v-model="left" side="left">
       <q-list bordered separator v-if="items && items.length > 0">
+        <br>
+        <q-item-section>
+           <div class="col-4" align="center">
+         <q-avatar size="180px"> 
+            <img :src="this.auth.userPhoto" />
+          </q-avatar>
+           </div>
+        </q-item-section>
+        <br />
         <q-item v-for="(item, i) of items" :to="item.url" clickable v-ripple :key="i">
           <q-item-section>
             <q-item-label>{{ item.title }}</q-item-label>
@@ -49,14 +52,8 @@
       </q-page>
     </q-page-container>
 
-    <q-footer bordered height="10px">
-      <q-toolbar height="10px">
-        <!-- <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
-          </q-avatar>Title
-        </q-toolbar-title>-->
-      </q-toolbar>
+    <q-footer elevated style="height: 40px;">
+    
     </q-footer>
   </q-layout>
 </template>
@@ -85,6 +82,7 @@ export default class AdminLayout extends Vue {
   }
   logout() {
     this.auth.logout();
+    localStorage.clear();
     // @ts-ignore
     this.$router.push('/');
   }

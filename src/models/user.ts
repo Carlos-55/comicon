@@ -6,9 +6,8 @@ export interface IUser {
 	birthdate?: Date;
 	email?: string;
 	cellphone?: number;
-	user?:string;
 	password?: string;
-	rol?: any;
+	photo?: any;
 	createdAt?: Date;
 	updatedAt?: Date;
 	deletedAt?: Date;

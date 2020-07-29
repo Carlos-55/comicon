@@ -1,4 +1,4 @@
-import { Dialog, Notify } from 'quasar';
+import { Dialog, Notify, QSpinnerIos, Quasar, Loading } from 'quasar';
 import { translateMessage } from "../boot/i18n";
 
 export type Notified = "Error" | "Success" | "Info" | "Warning"
@@ -24,7 +24,7 @@ export const NotifyPersonal = (typeNotify: Notified, messageSending: string, tra
 			break;
 	}
 	Notify.create({ message, color });
-
+	//TimePlay(message,color);
 }
 export const DialogPersonal = (typeNotify: Notified, messageSending: string, translate: boolean = true) => {
 	let message: string = translate ? translateMessage(messageSending) : messageSending;
@@ -37,7 +37,7 @@ export const DialogPersonal = (typeNotify: Notified, messageSending: string, tra
 			break;
 		case "Info":
 			color = 'blue'
-			title = translate ? translateMessage(`notifications.titles.Info`) : "Information"
+			title = "Información"
 			break;
 		case "Warning":
 			color = 'yellow'
@@ -46,6 +46,24 @@ export const DialogPersonal = (typeNotify: Notified, messageSending: string, tra
 		default:
 			break;
 	}
-	Dialog.create({ title, message, color });
+	Dialog.create({title ,message, color });
+
+}
+
+function TimePlay(mensaje : any, color: any){
+
+	const spinner = typeof QSpinnerIos !== 'undefined'
+	? QSpinnerIos //  importado arriba
+	: Quasar.components.QSpinnerIos
+
+	Loading.show({
+		spinner,
+		message: mensaje,
+		spinnerColor: color
+	  });
+	let time = setTimeout(() => {
+		Loading.hide()
+	let	time2 = void 0
+	},2000)
 
 }

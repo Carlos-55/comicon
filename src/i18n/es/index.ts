@@ -15,7 +15,7 @@ export default {
 		}
 	},
 	tables: {
-		no_result: 'No existe ningun resultado',
+		no_result: 'No se encontraron resultados',
 		no_data: 'No hay datos',
 		bad: 'Esto es muy triste... ',
 		find: 'Buscar... ',
@@ -27,12 +27,14 @@ export default {
 	forms: {
 		users: {
 			name: 'Nombre',
-			last_name: 'Apellidos',
+			last_name: 'Apellido paterno',
+			second_lastname:'Apellido Materno',
 			photo: 'Foto',
 			address: 'Direccion',
 			cp: 'Codigo postal',
 			street: 'Calle',
-			email: 'Correo'
+			email: 'Correo',
+			birtDate: 'Fecha de nacimiento'
 		}
 	},
 	headers: {

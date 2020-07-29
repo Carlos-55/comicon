@@ -117,10 +117,12 @@ module.exports = function (ctx) {
 				'QTimelineEntry',
 				'QEditor',
 				'QBadge',
-				' QSkeleton'
-				
+				'QSkeleton',
+				'QBar',
+				'QLinearProgress',
+				'QUploader'
 			],
-			directives: [],
+			directives: ['ClosePopup'],
 
 			// Quasar plugins
 			plugins: ['Dialog', 'BottomSheet', 'Notify'],
