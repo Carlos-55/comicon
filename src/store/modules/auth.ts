@@ -45,10 +45,10 @@ export class AuthStoreModule extends VuexModule {
 	}
 
 
-	get userPhoto() {
-		if (!this.token) return '';
-		return this.userLogged ? this.userLogged.photo : '';
-	}
+	// get userPhoto() {
+	// 	if (!this.token) return '';
+	// 	return this.userLogged ? this.userLogged.photo : '';
+	// }
 	get userEmail() {
 		if (!this.token) return '';
 		return this.userLogged ? this.userLogged.email : '';

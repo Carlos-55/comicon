@@ -21,31 +21,59 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer flat show-if-above v-model="left" side="left">
+    <q-drawer show-if-above v-model="left" side="left" elevated>
+      <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
       <q-list bordered separator v-if="items && items.length > 0">
         <br>
-        <q-item-section>
-           <div class="col-4" align="center">
-         <q-avatar size="180px"> 
-            <img :src="this.auth.userPhoto" />
-          </q-avatar>
-           </div>
-        </q-item-section>
+        <!-- <q-item-section>
+           <div class="col-4" align="center"> -->
+         <!-- <q-avatar square  size="180px">  -->
+            <!-- <img src="../assets/comicon.jpg" class="imagen"/> -->
+          <!-- </q-avatar> -->
+           <!-- </div>
+        </q-item-section> -->
         <br />
         <q-item v-for="(item, i) of items" :to="item.url" clickable v-ripple :key="i">
           <q-item-section>
-            <q-item-label>{{ item.title }}</q-item-label>
+            <div class>
+              <div class="row">
+                <div class="col-3">
+                  <span class="material-icons icon">{{ item.icon }}</span>
+                </div>
+                <div class="col-7">
+                  <q-item-label>{{ item.title }}</q-item-label>
+                </div>
+              </div>
+            </div>
             <q-item-label v-if="item.description" caption>{{ item.description }}</q-item-label>
           </q-item-section>
         </q-item>
         <q-item clickable v-ripple @click="logout()" :key="'hola'">
           <q-item-section>
-            <q-item-label>Cerrar sesion</q-item-label>
+            <div class>
+              <div class="row">
+                <div class="col-3">
+                  <span class="material-icons icon">exit_to_app</span>
+                </div>
+                <div class="col-7">
+                  <q-item-label>Cerrar sesion</q-item-label>
+                </div>
+              </div>
+            </div>
           </q-item-section>
         </q-item>
       </q-list>
-    </q-drawer>
-
+      </q-scroll-area>
+      <q-img class="absolute-top" src="../assets/batman.jpg" style="height: 180px">
+                <div class="absolute-bottom bg-transparent">
+                  <q-avatar size="56px" class="q-mb-sm">
+                    <!-- <img src="https://cdn.quasar.dev/img/boy-avatar.png"> -->
+                  </q-avatar>
+                  <div class="text-weight-bold">{{this.auth.userLogged.name}} {{this.auth.userLogged.paternsurname}}</div>
+                  <div>{{this.auth.userLogged.email}}</div>
+                </div>
+              </q-img>
+            </q-drawer>
     <q-page-container>
       <q-page padding>
         <slot></slot>
@@ -65,16 +93,24 @@ import { AuthStoreModule } from '../store/modules/auth';
 import { getModule } from 'vuex-module-decorators';
 import { GlobalStoreModule } from '../store/modules/global';
 import { languages, LanguagesActives } from '../boot/i18n';
+import { UserStoreModule } from '../store/modules/user';
 
 @Component
 export default class AdminLayout extends Vue {
   menu: boolean = false;
   auth = getModule(AuthStoreModule, this.$store);
+  userState = getModule(UserStoreModule, this.$store);
   global = getModule(GlobalStoreModule, this.$store);
   app = APP;
   languages = languages;
   icon = ICON;
   left?: boolean = false;
+  usuario = {};
+  
+      async mounted(){
+        this.usuario = Object.assign({},this.userState.getById(this.auth.userLogged));
+  }
+
 
   @Prop({ type: Array, required: false }) items!: Array<any>;
   created() {
@@ -83,7 +119,6 @@ export default class AdminLayout extends Vue {
   logout() {
     this.auth.logout();
     localStorage.clear();
-    // @ts-ignore
     this.$router.push('/');
   }
   changeLang(lang: LanguagesActives) {
@@ -92,4 +127,9 @@ export default class AdminLayout extends Vue {
 }
 </script>
 
-<style lang="scss" scope></style>
+<style lang="scss" scope>
+.imagen{
+  width: 280px;
+  height: 200px;
+}
+</style>

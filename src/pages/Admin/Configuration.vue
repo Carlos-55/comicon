@@ -2,8 +2,9 @@
     <div>
         <div align="center">
             <!-- <q-dialog v-model="card"> -->
-             <q-avatar size="130px">
-                <q-img :src="this.autState.userPhoto" :ratio="9/9"/>
+             <q-avatar size="100px" v-for="(item, index) in this.usuario.images"
+                       :key="index">
+                <q-img :src="item.photo" :ratio="9/9"/>
                </q-avatar>
               <!-- </q-dialog> -->
                 <br>
@@ -103,7 +104,7 @@
                         </div>
                     <q-card-section>
                         Aqui apareceran tus publicaciones
-                        <!-- {{this.autState.userPhoto}} -->
+                       <!-- {{this.usuario.images[1]}} -->
                     </q-card-section>
     
     </div>
@@ -142,7 +143,7 @@ position: any ='top';
 maximizedToggle: boolean = true;
 upload:boolean = false;
 card: boolean = false;
-
+forImage ={};
 @Watch('userState.selectedUser')
     onSelectedPatient(status: any) {
       this.usuario = Object.assign({}, status);
@@ -150,6 +151,10 @@ card: boolean = false;
 
     async mounted(){
         this.usuario = Object.assign({},this.userState.getById(this.autState.userLogged));
+        this.forImage = this.usuario;
+    }
+
+    async created(){
         
     }
 
@@ -170,13 +175,13 @@ card: boolean = false;
     let docs = JSON.parse(ant);
     let items = {
       photo: files,
+      id_user: docs.id,
+      category: 'Perfil'
     };
-    console.log(files);
-    // let img = this.userState.update({...this.usuario});
-//    console.log(docs.id,'========',  generateFormDataAny({ ...items }));
-   let img =await Vue.prototype.$axios.put(
-					`users/${docs.id}`,
-      await generateFormDataAny({ ...this.usuario, photo:files })
+    console.log(items);
+   console.log(docs.id,'========',  generateFormDataAny({ ...items }));
+   let img =await Vue.prototype.$axios.post('images/create',  
+   await generateFormDataAny({ ...this.usuario, photo:items.photo, id_user: items.id_user, category: items.category, dateImage: moment().format('LL') })
     );
     await this.userState.getById(this.usuario);
     localStorage.removeItem('doc');

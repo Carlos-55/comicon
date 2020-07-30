@@ -20,11 +20,13 @@ export default class Index extends Vue {
 	items = [
 		{
 			title: 'Inicio',
-			description: 'Muestra el inicio',
+      		icon:"home",
+			description: 'Hoy',
 			url: '/admin',
 		},
 		{
 			title: 'Categorias',
+		    icon: 'category',
 			description: 'Comics por categoria',
 			url: '/admin/usuarios',
 		},
@@ -34,7 +36,8 @@ export default class Index extends Vue {
 		// 	url: '/admin/roles',
 		// },
 		{
-			title: 'Configuracion',
+			title: 'Perfil',
+			icon: 'account_circle',
 			description: 'Configuracion de datos',
 			url: '/admin/configuration'
 		}
