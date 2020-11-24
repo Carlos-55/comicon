@@ -52,14 +52,14 @@
                         </q-card>
                         </q-dialog>
         </div>
-                   
+
                  <div align="center" class="text-h5">{{autState.userLogged.name}} {{autState.userLogged.paternsurname}}</div>
-                    <q-separator color="blue-8" inset />   
+                    <q-separator color="blue-8" inset />
                         <q-btn icon="more_horiz" label="Datos personales"  flat  @click="bar2 = true" no-caps/> <br>
                         <q-btn icon="image" label="Fotos"  flat  @click="bar2 = true" no-caps/>
 
-                    <q-separator color="blue-8" inset /><br>   
-                    
+                    <q-separator color="blue-8" inset /><br>
+
                     <div align="center">
                         <q-dialog :maximized="maximizedToggle" v-model="bar2" persistent  transition-show="slide-up" transition-hide="slide-down">
                             <q-card class="bg-blue-1 text-white">
@@ -106,9 +106,9 @@
                         Aqui apareceran tus publicaciones
                        <!-- {{this.usuario.images[1]}} -->
                     </q-card-section>
-    
+
     </div>
-   
+
 </template>
 
 <script lang="ts">
@@ -119,7 +119,7 @@ import {AuthStoreModule} from '../../store/modules/auth';
 import { getModule } from 'vuex-module-decorators';
 import { UserStoreModule } from '../../store/modules/user';
 import { ValidationsForm } from '../../helpers/validations';
-import * as moment from 'moment'; 
+import * as moment from 'moment';
 import { NotifyPersonal } from '../../helpers/messages';
 import { generateFormDataAny } from '../../helpers/helpers';
 @Component({
@@ -150,23 +150,20 @@ forImage ={};
     }
 
     async mounted(){
-        this.usuario = Object.assign({},this.userState.getById(this.autState.userLogged));
+        this.usuario = Object.assign({},await this.userState.getById(this.autState.userLogged));
         this.forImage = this.usuario;
     }
 
     async created(){
-        
+
     }
 
-        async onSubmit() {
+	async onSubmit() {
     if (!this.formValid) {
       return;
-    }
-    //console.log(this.usuario, '========');
-      const res = await Vue.prototype.$axios.put(
-					`users/${this.autState.userLogged.id}`,
-      await generateFormDataAny({ ...this.usuario})
-    );
+	}
+	  const res = await this.userState.update(this.usuario);
+	  this.bar2 = false;
   }
 
       /** save files in localstore */
@@ -180,7 +177,7 @@ forImage ={};
     };
     console.log(items);
    console.log(docs.id,'========',  generateFormDataAny({ ...items }));
-   let img =await Vue.prototype.$axios.post('images/create',  
+   let img =await Vue.prototype.$axios.post('images/create',
    await generateFormDataAny({ ...this.usuario, photo:items.photo, id_user: items.id_user, category: items.category, dateImage: moment().format('LL') })
     );
     await this.userState.getById(this.usuario);
@@ -212,7 +209,7 @@ forImage ={};
             color: 'white'
         },
         rules: [...ValidationsForm.reqAndTree],
-        props: { 
+        props: {
         }
        },
               {
@@ -224,7 +221,7 @@ forImage ={};
             class: 'col-6 col-md-6 q-px-sm q-py-sm',
         },
         rules: [...ValidationsForm.reqAndTree],
-        props: { 
+        props: {
         }
        },
        {
@@ -236,7 +233,7 @@ forImage ={};
             class: 'col-6 col-md-6 q-px-sm q-py-sm',
         },
         rules: [...ValidationsForm.reqAndTree],
-        props: { 
+        props: {
         }
        },
        {
@@ -247,7 +244,7 @@ forImage ={};
             class: 'col-12 col-md-12 q-px-sm q-py-sm',
         },
         rules: [...ValidationsForm.reqAndTree],
-        props: { 
+        props: {
         }
        },
     //    {
@@ -257,7 +254,7 @@ forImage ={};
     //         class: 'col-6 col-md-6 q-px-sm q-py-sm',
     //     },
     //     rules: [...ValidationsForm.reqAndTree],
-    //     props: { 
+    //     props: {
     //     }
     //    },
     ];

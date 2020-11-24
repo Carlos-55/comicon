@@ -61,6 +61,20 @@
         <template v-else-if="item.type == 'slide'">
           <!-- <q-slider v-model="model[item.key]" dense v-bind="item.props"  \> -->
         </template>
+		<template v-else-if="item.type == 'textArea'">
+			<div class="q-pa-md" style="max-width: 100%">
+				<q-input
+				dense
+				lazy-rules
+				:rules="item.rules"
+				v-model="model[item.key]"
+				:label="$t(item.label)"
+				@change="onValidation"
+				v-bind="item.props"
+				type="textarea"
+				/>
+			</div>
+		</template>
         <template v-else-if="item.type == 'multi-form'">
           <h5>{{$t(item.label)}}</h5>
           <q-btn size="sm" flat @click="model[item.key].push({})">+</q-btn>
@@ -324,7 +338,7 @@
                   dense
                   lazy-rules
                   :type="subItem.isPassword?'password':'text'"
-                   
+
                   v-model="model[item.key][subItem.key]"
                   :label="$t(subItem.label)"
                   :rules="subItem.rules"
@@ -436,7 +450,7 @@
                 :name="item.isPassword ? 'visibility_off' : 'visibility'"
                 class="cursor-pointer"
                 @click="item.isPassword = !item.isPassword"
-                
+
               />
             </template>
             <template v-slot:prepend>
@@ -462,7 +476,7 @@
                 :name="item.isPassword ? 'visibility_off' : 'visibility'"
                 class="cursor-pointer"
                 @click="item.isPassword = !item.isPassword"
-                
+
               />
             </template>
             <template v-slot:prepend>
@@ -507,7 +521,7 @@
         <template v-else-if="item.type == 'inicio'">
           <q-input
             dense
-            rounded 
+            rounded
             label-color="grey-1"
             lazy-rules
             :rules="item.rules"

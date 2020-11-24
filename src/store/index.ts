@@ -6,6 +6,7 @@ import { DATASTORAGE } from '../helpers/configs';
 import { AuthStoreModule } from "./modules/auth";
 import { UserStoreModule } from "./modules/user";
 import { GlobalStoreModule } from "./modules/global";
+import { PublicationStoreModule } from './modules/Publications';
 
 Vue.use(Vuex);
 const vuexLocal = new VuexPersistence<any>({
@@ -17,7 +18,8 @@ export default new Vuex.Store({
 	modules: {
 		AuthStoreModule,
 		UserStoreModule,
-		GlobalStoreModule
+		GlobalStoreModule,
+		PublicationStoreModule
 	},
 
 	// @ts-ignore

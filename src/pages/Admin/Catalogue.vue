@@ -1,21 +1,44 @@
 <template>
-  <div id="Users">
-    <Delete
-      :headers="headers"
-      v-model="dialogDelete"
-      :item="usersStore.selectedUser"
-      @onConfirm="onConfirmDelete"
-    />
-    <Table
-      :headers="headers"
-      :loading="usersStore.loader"
-      :data="usersStore.users"
-      @onUpdate="onUpdate"
-      @onDelete="onDelete"
-      title="titles.users"
-    >
-      <FormUsers v-model="dialog" />
-    </Table>
+  <div id="Publications">
+	 <q-page-sticky position="top-right" :offset="[3, 18]">
+			 <FormPublication v-model="dialogNewPublication"></FormPublication>
+     </q-page-sticky>
+	 <br>
+	<div class="q-pa-md" align="center" v-for="(item, index) of this.publication" :key="index">
+		<q-card style="max-width: 300px">
+		<q-item>
+			<q-item-section avatar>
+				<div v-if="item.user.images[0] == null">
+					<q-avatar>
+						<q-img src="../../assets/profile.jpg"  style="height: 100%; width: 100%;"></q-img>
+					</q-avatar>
+				</div>
+				<div v-else>
+					<div v-if="item.user.images[0].category == 'Perfil'">
+						<q-avatar>
+							<q-img :src="item.user.images[0].photo" style="height: 100%; width: 100%;"></q-img>
+						</q-avatar>
+					</div>
+				</div>
+			</q-item-section>
+
+			<q-item-section>
+			<q-item-label>
+				<p type="text">{{item.user.name}}</p>
+			</q-item-label>
+			<q-item-label caption>
+				<p type="text">{{item.description}}</p>
+			</q-item-label>
+			</q-item-section>
+		</q-item>
+		<!-- <q-skeleton height="200px" square /> -->
+		<q-img :src="item.evidencie"></q-img>
+		<q-card-actions align="right" class="q-gutter-md">
+			<q-btn flat icon="thumb_up"/>
+			<q-btn  flat  icon="message"/>
+		</q-card-actions>
+		</q-card>
+   </div>
   </div>
 </template>
 
@@ -24,91 +47,31 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import Table from 'components/Table.vue';
 import Delete from 'components/Delete.vue';
 import FormUsers from 'components/Admin/FormUsers.vue';
-import { UserStoreModule } from '../../store/modules/user';
+import Modal from '../../components/ModalPublication.vue';
+import FormPublication from '../../components/Publication/FormPublication.vue';
+import { PublicationStoreModule } from '../../store/modules/Publications';
 import { getModule } from 'vuex-module-decorators';
+import { IPublication } from '../../models/publications';
 @Component({
   components: {
     Table,
     FormUsers,
-    Delete
+	Delete,
+	Modal,
+	FormPublication
   }
 })
-export default class Users extends Vue {
-  usersStore = getModule(UserStoreModule, this.$store);
+export default class Publications extends Vue {
+  publicationsStore = getModule(PublicationStoreModule, this.$store);
   dialog = false;
   dialogDelete = false;
   model = {};
-
-  headers = [
-    {
-      name: 'id',
-      label: 'headers.users.no',
-      sortable: true,
-      required: true,
-      align: 'center',
-      field: 'id'
-    },
-    {
-      name: 'name',
-      label: 'headers.users.name',
-      sortable: true,
-      required: true,
-      align: 'center',
-      field: 'name'
-    },
-    {
-      name: 'email',
-      label: 'headers.users.email',
-      sortable: true,
-      required: true,
-      align: 'center',
-      field: 'email'
-    },
-    {
-      name: 'active',
-      label: 'headers.users.state',
-      sortable: true,
-      required: true,
-      align: 'center',
-      field: 'active'
-    },
-     {
-      name: 'options',
-      label: 'headers.users.options',
-      sortable: false,
-      required: false,
-      align: 'center',
-      field: 'options'
-    }
-  ];
-  onUpdate(item: any) {
-    this.usersStore.context.commit('SET', item);
-    this.dialog = true;
-  }
-  onDelete(item: any) {
-    this.dialogDelete = true;
-    this.usersStore.context.commit('SET', item);
-  }
-  @Watch('dialogDelete')
-  onDialogDelete(status: any, newStatus: boolean) {
-    if (!status) {
-      this.usersStore.context.commit('SET');
-    }
-  }
-  @Watch('dialog')
-  onDialog(status: any, newStatus: boolean) {
-    if (!status) {
-      this.usersStore.context.commit('SET');
-    }
-  }
-  async onConfirmDelete() {
-    await this.usersStore.delete(this.usersStore.selectedUser);
-    this.dialogDelete = false;
-  }
-
-  async created() {
-    await this.usersStore.getAll();
-  }
+  publication = [];
+  dialogNewPublication: boolean = false;
+  publications: any;
+ 	async mounted() {
+		   this.publication = Object.assign({},  await this.publicationsStore.getAll());
+	}
 }
 </script>
 
