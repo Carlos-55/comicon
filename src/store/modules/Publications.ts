@@ -1,51 +1,52 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import Store from '../index';
 import Vue from 'vue';
-import { IUser } from '../../models/user';
+import { IPublication } from '../../models/publications';
 import { oflineItems, generateFormDataAny } from '../../helpers/helpers';
 import { NotifyPersonal } from 'src/helpers/messages';
 
 @Module({
-	name: 'UserStoreModule',
+	name: 'PublicationStoreModule',
 	namespaced: true,
 })
-export class UserStoreModule extends VuexModule {
-	public selectedUser: IUser = {};
-	public users: IUser[] = [];
+export class PublicationStoreModule extends VuexModule {
+	public selectedPublication: IPublication = {};
+	public publications: IPublication[] = [];
 	public loader: boolean = false;
 	@Mutation
-	LIST(users: IUser[]) {
-		this.users = [...users];
+	LIST(publications: IPublication[]) {
+		this.publications = [...publications];
 	}
 	@Mutation
-	ADD(user: IUser) {
-		this.users = [...this.users, user];
+	ADD(user: IPublication) {
+		this.publications = [...this.publications, user];
 	}
 	@Mutation
 	LOADER(loader: boolean) {
 		this.loader = loader;
 	}
 	@Mutation
-	UPDATE(user: IUser) {
-		const newUsers = this.users.filter(s => s.id !== user.id);
-		this.users = [...newUsers, user];
+	UPDATE(user: IPublication) {
+		const newUsers = this.publications.filter(s => s.id !== user.id);
+		this.publications = [...newUsers, user];
 	}
 	@Mutation
-	REMOVE(user: IUser) {
-		this.users = this.users.filter(s => s.id !== user.id);
+	REMOVE(user: IPublication) {
+		this.publications = this.publications.filter(s => s.id !== user.id);
 	}
 	@Mutation
-	SET(user?: IUser) {
+	SET(user?: IPublication) {
 		// @ts-ignore
-		this.selectedUser = Object.assign({}, user ? { ...user } : { address: {}, codes: [{}] });
+		this.selectedPublication = Object.assign({}, user ? { ...user } : { address: {}, codes: [{}] });
 	}
 	@Action
 	async getAll() {
 		this.context.commit('LOADER', true);
 		try {
 			if (navigator.onLine) {
-				const res = await Vue.prototype.$axios.get('users');
+				const res = await Vue.prototype.$axios.get('publication');
 				this.context.commit('LIST', res);
+				return res
 			}
 		} finally {
 			this.context.commit('SET');
@@ -53,29 +54,27 @@ export class UserStoreModule extends VuexModule {
 		}
 	}
 	@Action
-	async getById(item: IUser) {
+	async getById(item: IPublication) {
 		this.context.commit('LOADER', true);
 		try {
 			if (navigator.onLine) {
-				const res = await Vue.prototype.$axios.get(`users/${item.id}`);
+				const res = await Vue.prototype.$axios.get(`publication/${item.id}`);
 				this.context.commit('SET', res);
-				return res
 			}
 		} finally {
 			this.context.commit('LOADER', false);
 		}
 	}
 	@Action
-	async create(item: IUser) {
-		console.log(item);
+	async create(item: IPublication) {
 
 		this.context.commit('LOADER', true);
 		try {
 			if (navigator.onLine) {
-				const res = await Vue.prototype.$axios.post('users', item);
+				const res = await Vue.prototype.$axios.post('publication', await generateFormDataAny(item));
 				this.context.commit('ADD', res);
 			} else {
-				oflineItems(`users`, 'post', item);
+				oflineItems(`publication`, 'post', item);
 			}
 			this.context.commit('SET');
 		} finally {
@@ -83,18 +82,17 @@ export class UserStoreModule extends VuexModule {
 		}
 	}
 	@Action
-	async update(item: IUser) {
+	async update(item: IPublication) {
 		this.context.commit('LOADER', true);
 		try {
 			if (navigator.onLine) {
 				const res = await Vue.prototype.$axios.put(
-					`users/${item.id}`,
-					item
+					`publication/${item.id}`,
+					await generateFormDataAny(item)
 				);
-				console.log(res, '')
 				this.context.commit('UPDATE', res);
 			} else {
-				oflineItems(`users/${item.id}`, 'put', item);
+				oflineItems(`publication/${item.id}`, 'put', generateFormDataAny(item));
 			}
 			this.context.commit('SET');
 		} finally {
@@ -102,16 +100,16 @@ export class UserStoreModule extends VuexModule {
 		}
 	}
 	@Action
-	async delete(item: IUser) {
+	async delete(item: IPublication) {
 		this.context.commit('LOADER', true);
 		try {
 			if (navigator.onLine) {
 				const res = await Vue.prototype.$axios.delete(
-					`users/${item.id}`
+					`publication/${item.id}`
 				);
 				this.context.commit('REMOVE', item);
 			} else {
-				oflineItems(`users/${item.id}`, 'delete', null);
+				oflineItems(`publication/${item.id}`, 'delete', null);
 			}
 			this.context.commit('SET');
 		} finally {

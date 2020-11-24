@@ -18,6 +18,39 @@
             </q-item>
           </q-list>
         </q-btn-dropdown> -->
+		<q-toolbar-title>
+		</q-toolbar-title>
+		 <q-btn flat round dense icon="more_vert">
+			  <q-menu>
+				<div class="row no-wrap q-pa-md">
+				<div class="column">
+					<div class="text-h6 q-mb-md">Settings</div>
+					<q-toggle v-model="mobileData" label="Use Mobile Data" />
+					<q-toggle v-model="bluetooth" label="Bluetooth" />
+				</div>
+
+				<q-separator vertical inset class="q-mx-lg" />
+
+				<div class="column items-center">
+					<q-avatar size="5em">
+						<q-img src="../assets/profile.jpg" style="height: 100%; width: 100%;"/>
+					</q-avatar>
+
+					<div class="text-subtitle1 q-mt-md q-mb-xs">
+					{{this.usuario.name}}
+					</div>
+
+					<q-btn
+					color="primary"
+					label="Logout"
+					push
+					size="sm"
+					v-close-popup
+					/>
+				</div>
+				</div>
+			</q-menu>
+		 </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -81,7 +114,7 @@
     </q-page-container>
 
     <q-footer elevated style="height: 40px;">
-    
+
     </q-footer>
   </q-layout>
 </template>
@@ -94,7 +127,7 @@ import { getModule } from 'vuex-module-decorators';
 import { GlobalStoreModule } from '../store/modules/global';
 import { languages, LanguagesActives } from '../boot/i18n';
 import { UserStoreModule } from '../store/modules/user';
-
+import { IUser } from '../models/user';
 @Component
 export default class AdminLayout extends Vue {
   menu: boolean = false;
@@ -105,11 +138,21 @@ export default class AdminLayout extends Vue {
   languages = languages;
   icon = ICON;
   left?: boolean = false;
-  usuario = {};
-  
-      async mounted(){
-        this.usuario = Object.assign({},this.userState.getById(this.auth.userLogged));
-  }
+  usuario: IUser = {};
+  mobileData: boolean = true;
+  bluetooth: boolean = false;
+  photoProfile: string = '';
+  defaultPhoto = '../assets/profile.jpg';
+  async mounted(){
+		this.usuario = Object.assign({}, await this.userState.getById(this.auth.userLogged));
+		for(let image = 0 ; image < this.usuario.images.length; image++){
+			let element = this.usuario.images[image];
+			if(element.category == 'Perfil'){
+				this.photoProfile = element.photo;
+				return this.photoProfile
+			}
+		}
+	}
 
 
   @Prop({ type: Array, required: false }) items!: Array<any>;

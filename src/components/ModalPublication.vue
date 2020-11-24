@@ -17,10 +17,10 @@
       <q-layout v-if="$q.screen.lt.md" view="Lhh lpR fff" container class="bg-white">
         <q-header class="bg-primary">
           <q-toolbar>
-            <q-btn flat :disabled="loader" @click="onCancel()" no-caps round dense icon="close" />
+            <q-btn flat :disabled="loader" @click="onCancel()" round dense icon="close" />
             <q-toolbar-title>{{ title }}</q-toolbar-title>
 
-            <q-btn flat :disabled="loader" @click="onConfirm()" dense no-caps>{{$t('modals.confirm')}}</q-btn>
+            <q-btn flat :disabled="loader" @click="onConfirm()" dense>{{$t('modals.confirm')}}</q-btn>
           </q-toolbar>
         </q-header>
 
@@ -69,7 +69,7 @@ import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 
 @Component
 export default class Modal extends Vue {
-  @Prop({ type: String, required: false, default: 'BTN' }) btnTitle!: string;
+  @Prop({ type: String, required: false, default: 'Publication' }) btnTitle!: string;
   @Prop({ type: Object }) btnProps!: Object;
 
   @Prop({ type: String, required: false, default: 'Modal' }) title!: string;

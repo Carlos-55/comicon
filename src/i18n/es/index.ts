@@ -21,7 +21,7 @@ export default {
 		find: 'Buscar... ',
 	},
 	modals: {
-		confirm: 'Confirmar',
+		confirm: 'Publicar',
 		cancel: 'Cancelar',
 	},
 	forms: {
@@ -45,6 +45,14 @@ export default {
 			state: 'Estatus',
 			rol: 'Rol',
 			options: 'Opciones'
-		}
+		},
+	},
+	publications: {
+		name: 'Nombre',
+		createdAt: 'Fecha actual',
+		description: 'Que estas pensando?',
+		image: 'Imagen',
+		create: 'Agregar publicacion',
+		updated: 'Actualizar',
 	}
 }
