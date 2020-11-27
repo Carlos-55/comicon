@@ -18,7 +18,7 @@ Vue.prototype.$axios.interceptors.request.use((request: AxiosRequestConfig) => {
 Vue.prototype.$axios.interceptors.response.use(
 	function (response: AxiosResponse) {
 		if (response && response.data && response.data.message && response.data.message != '') {
-			NotifyPersonal('Success', response.data.message, false)
+			//  NotifyPersonal('Success', response.data.message, false)
 		}
 		return response.data.data || response.data || response;
 	},

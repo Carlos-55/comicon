@@ -1,3 +1,4 @@
+import { ConversationStoreModule } from './modules/conversations';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
@@ -19,7 +20,8 @@ export default new Vuex.Store({
 		AuthStoreModule,
 		UserStoreModule,
 		GlobalStoreModule,
-		PublicationStoreModule
+		PublicationStoreModule,
+		ConversationStoreModule
 	},
 
 	// @ts-ignore

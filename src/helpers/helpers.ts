@@ -62,3 +62,23 @@ export function getLocalization(): Promise<any> {
     }
   });
 }
+//recomiendo copiar y pegar en el componente a usar
+export function addTocardOrLiked(item: any) {
+	let count = 1;
+	let arrayObject: any = [];
+	var busqueda = arrayObject.find((element: any) =>  element.id == item.id)
+	console.log(busqueda)
+		if(typeof busqueda != 'object'){
+			arrayObject.push({...item, quantity:count})
+	}else if(typeof busqueda == 'object'){
+			var index = arrayObject.indexOf(busqueda)
+			arrayObject[index].count++
+	}else if(typeof busqueda == 'object'){
+			var index = arrayObject.indexOf( busqueda)
+		if(arrayObject[index].count==1){
+			arrayObject.splice(index, 1);
+		}else{
+			arrayObject[index].count--
+		}
+    }
+}

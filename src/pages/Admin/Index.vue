@@ -9,7 +9,11 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
-export default class Index extends Vue {}
+export default class Index extends Vue {
+
+	async mounted() {
+	}
+}
 </script>
 
 <style lang="scss" scope></style>
